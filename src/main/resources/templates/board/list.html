@@ -23,14 +23,14 @@ list
             contentType : 'application/json; charset=utf-8',
             data: {},
             cache: false,
-            // success: (obj_data, status, xhr)=>{
-            //     alert(JSON.stringify(obj_data));
-            //     for(let each of obj_data){
-            //         $("#div_list_board").append(
-            //             "<a href='/board/detail/"+each["id"]+"'>"+each["id"]+"</a>" + "//" + each["title"] + each["content"]+ each["author"]+"<br/>"
-            //         );
-            //     }
-            // },
+            success: (obj_data, status, xhr)=>{
+                alert(JSON.stringify(obj_data));
+                for(let each of obj_data){
+                    $("#div_list_board").append(
+                        "<a href='/board/detail/"+each["id"]+"'>"+each["id"]+"</a>" + "//" + each["title"] + each["content"]+ each["author"]+"<br/>"
+                    );
+                }
+            },
             error: (obj_data, status, xhr)=>{
                 alert("error!!");
                 alert(JSON.stringify(obj_data));
