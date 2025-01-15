@@ -8,17 +8,17 @@
 <body>
 list
 
-<div id="div_list_board">
+<div id="div_list_notice">
 </div>
 
-<button onclick="list_board()">
+<button onclick="list_notice()">
     글 전체 목록
 </button>
 
 <script>
-    function list_board(){
+    function list_notice(){
         $.ajax({
-            url: "/api/board/list",
+            url: "/api/notice/list",
             type: "GET",
             contentType : 'application/json; charset=utf-8',
             data: {},
@@ -26,8 +26,8 @@ list
             success: (obj_data, status, xhr)=>{
                 alert(JSON.stringify(obj_data));
                 for(let each of obj_data){
-                    $("#div_list_board").append(
-                        "<a href='/board/detail/"+each["id"]+"'>"+each["id"]+"</a>" + "//" + each["title"] + "<br/>"
+                    $("#div_list_notice").append(
+                        "<a href='/notice/detail/"+each["id"]+"'>"+each["id"]+"</a>" + "//" + each["title"] + each["content"]+ each["author"]+ each["date"] + "<br/>"
                     );
                 }
             },

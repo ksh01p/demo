@@ -2,53 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 생성</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
-create
-<div id="div_id" class="div_abcde">
-    글 입력 테스트
+<h1>게시글 생성</h1>
+<div>
+    순번: <input type="number" id="create_board_id" /><br />
+    제목: <input type="text" id="create_board_title" /><br />
+    내용: <input type="text" id="create_board_content" /><br />
+    작성자: <input type="text" id="create_board_author" /><br />
+    <button onclick="create_board()">저장</button>
 </div>
-순번
-<input type="number" id="create_board_id" />
-제목
-<input type="text" id="create_board_title" />
-내용
-<input type="text" id="create_board_content" />
-작성자
-<input type="text" id="create_board_author" />
-
-<button onclick="create_board()">
-    저장
-</button>
 <script>
+    function create_board() {
+        const id = $("#create_board_id").val(); // 순번 입력값
+        const title = $("#create_board_title").val();
+        const content = $("#create_board_content").val();
+        const author = $("#create_board_author").val();
 
-    function create_board(){
+        if (!title || !content || !author) {
+            alert("모든 필드를 입력해주세요!");
+            return;
+        }
+
         $.ajax({
             url: "/api/board/create",
-            type: "GET",
-            contentType : 'application/json; charset=utf-8',
-            data: {
-                id : $("#create_board_id").val()
-                , title : $("#create_board_title").val()
-                ,content : $("#create_board_content").val()
-                ,author : $("#create_board_author").val()
-            },
+            type: "POST",//GET으로 하면 안됩니다 !
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                id: id,
+                title: title,
+                content: content,
+                author: author
+            }),
             cache: false,
-            success: (obj_data, status, xhr)=>{
-                alert(JSON.stringify(obj_data));
+            success: (obj_data, status, xhr) => {
+                alert("게시글 저장 성공: " + JSON.stringify(obj_data));
             },
-            error: (obj_data, status, xhr)=>{
-                alert("error!!");
+            error: (obj_data, status, xhr) => {
+                alert("에러 발생!");
                 alert(JSON.stringify(obj_data));
             }
         });
     }
-    /*
-    */
 </script>
-
-
 </body>
 </html>

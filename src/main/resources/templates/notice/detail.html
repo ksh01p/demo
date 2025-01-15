@@ -8,15 +8,16 @@
 <body>
 detail
 
-<input type="text" id="detail_board_id" readonly/>
-<input type="text" id="detail_board_title" />
-<input type="text" id="detail_board_content" />
-<input type="text" id="detail_board_author" />
+<input type="text" id="detail_notice_id" readonly/>
+<input type="text" id="detail_notice_title" />
+<input type="text" id="detail_notice_content" />
+<input type="text" id="detail_notice_author" />
+<input type="text" id="detail_notice_date" />
 
-<button onclick="update_board()">
+<button onclick="update_notice()">
     글 수정
 </button>
-<button onclick="delete_board()">
+<button onclick="delete_notice()">
     글 삭제
 </button>
 
@@ -31,12 +32,12 @@ detail
     }
     $( document ).ready(function() {
         console.log( "ready!" );
-        detail_board();
+        detail_notice();
     });
 
-    function detail_board(){
+    function detail_notice(){
         $.ajax({
-            url: "/api/board/detail",
+            url: "/api/notice/detail",
             type: "GET",
             contentType : 'application/json; charset=utf-8',
             data: {
@@ -44,10 +45,12 @@ detail
             },
             cache: false,
             success: (obj_data, status, xhr)=>{
-                $("#detail_board_id").val(obj_data["id"]);
-                $("#detail_board_title").val(obj_data["title"]);
-                $("#detail_board_content").val(obj_data["content"]);
-                $("#detail_board_author").val(obj_data["author"]);
+                $("#detail_notice_id").val(obj_data["id"]);
+                $("#detail_notice_title").val(obj_data["title"]);
+                $("#detail_notice_content").val(obj_data["content"]);
+                $("#detail_notice_author").val(obj_data["author"]);
+                $("#detail_notice_date").val(obj_data["date"]);
+
             },
             error: (obj_data, status, xhr)=>{
                 alert("error!!");
@@ -56,16 +59,18 @@ detail
         });
     }
 
-    function update_board(){
+    function update_notice(){
         $.ajax({
-            url: "/api/board/update",
+            url: "/api/notice/update",
             type: "GET",
             contentType : 'application/json; charset=utf-8',
             data: {
                 id : final_id
-                ,title : $("#detail_board_title").val()
-                ,content : $("#detail_board_content").val()
-                ,author : $("#detail_board_author").val()
+                ,title : $("#detail_notice_title").val()
+                ,content : $("#detail_notice_content").val()
+                ,author : $("#detail_notice_author").val()
+                ,date : $("#detail_notice_date").val()
+
             },
             cache: false,
             success: (obj_data, status, xhr)=>{
@@ -77,9 +82,9 @@ detail
             }
         });
     }
-    function delete_board(){
+    function delete_notice(){
         $.ajax({
-            url: "/api/board/delete",
+            url: "/api/notice/delete",
             type: "GET",
             contentType : 'application/json; charset=utf-8',
             data: {

@@ -1,14 +1,13 @@
-package com.example.demo.controller;
+package com.fourcompany.demo1.controller;
+
+import com.fourcompany.demo1.domain.Board;
+
+import com.fourcompany.demo1.dto.BoardDto;
+import com.fourcompany.demo1.service.BoardService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
-import com.example.demo.domain.Board;
-import com.example.demo.service.BoardService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,12 @@ public class BoardRestController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/create")
-    public Map<String, Object> create(@RequestParam Map<String, Object> params){
-        return boardService.createBoard(params);
-
+    @PostMapping("/create")
+    public ResponseEntity<BoardDto.CreateResDto> createBoard(@RequestBody BoardDto.CreateReqDto requestDto) {
+        BoardDto.CreateResDto responseDto = boardService.createBoard(requestDto);
+        return ResponseEntity.ok(responseDto);
     }
+
     @GetMapping("/list")
     public List<Board> list(){
         return boardService.listBoard();
@@ -37,8 +37,8 @@ public class BoardRestController {
     @GetMapping("/detail") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public Board detail(@RequestParam Integer id){
         return boardService.detailBoard(id);
-
     }
+
     @GetMapping("/update")
     public Map<String, Object> update(@RequestParam Map<String, Object> params){
         return boardService.updateBoard(params);
